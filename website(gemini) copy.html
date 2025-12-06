@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekam Wadhwa | Student Technologist Portfolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    
+    <style>
+        /* ------------------------------------------
+        1. COLOR PALETTE & VARIABLES
+        ------------------------------------------ 
+        */
+        :root {
+            --color-charcoal-dark: #0a0a0c;
+            --color-charcoal-light: #18181b;
+            --color-text-primary: #f0f0f0;
+            --color-amber-main: #ffb74d;
+            --color-amber-subtle: rgba(255, 183, 77, 0.15);
+            --color-teal-accent: #4dd0e1;
+            --color-teal-subtle: rgba(77, 208, 225, 0.1);
+            --color-gold-muted: #c29d65;
+
+            /* UI Elements */
+            --glass-bg: rgba(30, 30, 35, 0.7);
+            --nav-bg: rgba(10, 10, 12, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            
+            --transition-speed: 0.4s;
+            --reveal-timing: cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* ------------------------------------------
+        2. GLOBAL STYLES & TYPOGRAPHY
+        ------------------------------------------ 
+        */
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--color-charcoal-dark);
+            color: var(--color-text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: -0.02em;
+            font-weight: 500;
+            color: #ffffff;
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            margin-bottom: 60px;
+            text-align: center;
+            position: relative;
+        }
+        
+        /* Vector Accent Line under Headings */
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-amber-main), var(--color-teal-accent));
+            margin: 20px auto 0;
+            border-radius: 2px;
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+        }
+
+        section { padding: 120px 5%; position: relative; z-index: 2; }
+        
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all var(--transition-speed) ease-out;
+        }
+
+        /* ------------------------------------------
+        3. NAVIGATION BAR
+        ------------------------------------------ 
+        */
+        #navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            padding: 15px 5%;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        #navbar .logo {
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+        
+        #navbar .logo i { color: var(--color-amber-main); font-size: 1.4rem; }
+
+        #navbar div a {
+            color: var(--color-text-primary);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            opacity: 0.7;
+        }
+
+        #navbar div a:hover { color: var(--color-amber-main); opacity: 1; }
+        
+        /* ------------------------------------------
+        4. BACKGROUND & VECTORS
+        ------------------------------------------ 
+        */
+        .background-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; overflow: hidden; pointer-events: none;
+        }
+
+        .bg-graphic {
+            position: absolute; top: 50%; left: 50%; width: 150vmax; height: 150vmax;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 100 100' version='1.1' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 L100 100 M100 0 L0 100 M50 0 L50 100 M0 50 L100 50' stroke='rgba(77, 208, 225, 0.03)' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='20' stroke='rgba(255, 183, 77, 0.03)' stroke-width='0.5' fill='none'/%3E%3Ccircle cx='50' cy='50' r='35' stroke='rgba(77, 208, 225, 0.03)' stroke-width='0.5' fill='none'/%3E%3C/svg%3E");
+            background-size: 100px 100px;
+            transform: translate(-50%, -50%);
+            animation: rotateGraphic 120s linear infinite;
+            opacity: 0.8;
+        }
+        
+        .bg-glow {
+             position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+             background: radial-gradient(circle at 20% 30%, rgba(255, 183, 77, 0.08) 0%, transparent 50%),
+                         radial-gradient(circle at 80% 70%, rgba(77, 208, 225, 0.08) 0%, transparent 50%);
+             mix-blend-mode: screen;
+        }
+
+        @keyframes rotateGraphic {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .reveal-item {
+            opacity: 0; transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s var(--reveal-timing), transform 0.8s var(--reveal-timing);
+        }
+        .reveal-item.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+        /* ------------------------------------------
+        5. HERO SECTION
+        ------------------------------------------ 
+        */
+        #hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            padding-top: 60px;
+        }
+
+        .hero-content { text-align: center; max-width: 900px; }
+
+        #hero h1 {
+            font-size: clamp(3.5rem, 11vw, 7.5rem);
+            line-height: 1.05; margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #hero .subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.6rem);
+            color: var(--color-gold-muted);
+            letter-spacing: 0.15em; font-weight: 400; text-transform: uppercase;
+            margin-bottom: 50px;
+        }
+
+        .avatar-container {
+            position: relative; width: 180px; height: 180px; margin: 0 auto;
+        }
+
+        .avatar-ring {
+            position: absolute; inset: -8px; border-radius: 50%;
+            background: conic-gradient(from 180deg at 50% 50%, var(--color-teal-accent) 0deg, var(--color-amber-main) 180deg, var(--color-teal-accent) 360deg);
+            animation: rotateRing 10s linear infinite;
+            opacity: 0.8; filter: blur(8px); z-index: 1;
+        }
+        
+        .avatar-wrapper {
+            position: relative; width: 100%; height: 100%; border-radius: 50%;
+            overflow: hidden; z-index: 2; border: 2px solid var(--color-charcoal-light);
+            background: var(--color-charcoal-dark);
+        }
+        .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .scroll-down {
+            position: absolute; bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            color: var(--color-teal-accent);
+            animation: bounce 2s infinite;
+            font-size: 1.5rem; opacity: 0.7;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
+        }
+        @keyframes rotateRing { to { transform: rotate(360deg); } }
+
+        /* ------------------------------------------
+        6. ABOUT & RECOGNITION
+        ------------------------------------------ 
+        */
+        .about-card {
+            max-width: 850px; margin: 0 auto; padding: 50px;
+            line-height: 1.9; font-size: 1.15rem; text-align: center; color: #d0d0d0;
+        }
+        .about-card strong { color: var(--color-amber-main); font-weight: 600; }
+        .about-card:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: var(--color-amber-subtle);
+            transform: translateY(-5px);
+        }
+
+        .recognition-grid {
+            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
+            max-width: 1000px; margin: 0 auto;
+        }
+
+        .rec-item {
+            background: var(--color-charcoal-light);
+            padding: 30px 25px; border-radius: 16px; text-align: center;
+            flex: 1 1 250px; border: 1px solid var(--glass-border);
+            transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        
+        .rec-item i {
+            margin-bottom: 20px;
+            background: -webkit-linear-gradient(45deg, var(--color-teal-accent), var(--color-amber-main));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .rec-item:hover {
+            transform: translateY(-8px); border-color: var(--color-teal-accent);
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        /* ------------------------------------------
+        7. SKILLS SECTION (Updated with ESP32/Bots)
+        ------------------------------------------ 
+        */
+        .skills-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 20px; max-width: 1000px; margin: 0 auto;
+        }
+
+        .skill-card {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 25px 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
+        }
+
+        .skill-card i {
+            font-size: 2.5rem; margin-bottom: 12px;
+            transition: transform 0.3s;
+        }
+        
+        .skill-card span { font-weight: 600; font-size: 0.9rem; color: #ccc; }
+
+        .skill-card:hover {
+            background: var(--color-teal-subtle);
+            border-color: var(--color-teal-accent); transform: translateY(-5px);
+        }
+        .skill-card:hover i { transform: scale(1.2); }
+        .skill-card:hover span { color: var(--color-teal-accent); }
+        
+        .colored { color: inherit; } 
+
+        /* ------------------------------------------
+        8. PROJECTS SECTION (Added ESP32/Bot Projects)
+        ------------------------------------------ 
+        */
+        .projects-list {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px; max-width: 1100px; margin: 0 auto;
+        }
+
+        .project-card {
+            display: flex; flex-direction: column;
+            background: var(--color-charcoal-light);
+            border-radius: 16px; border: 1px solid var(--glass-border);
+            overflow: hidden; transition: all 0.4s;
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(255, 183, 77, 0.1);
+            border-color: rgba(255, 183, 77, 0.3);
+        }
+        
+        .project-graphic-header {
+            height: 180px;
+            background: linear-gradient(45deg, #1a1a1d, #252529);
+            display: flex; align-items: center; justify-content: center;
+            border-bottom: 1px solid var(--glass-border);
+            position: relative; overflow: hidden;
+        }
+        
+        .project-graphic-header::before {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background-image: radial-gradient(var(--color-glass-border) 1px, transparent 1px);
+            background-size: 10px 10px; opacity: 0.2;
+        }
+
+        .project-svg {
+            width: 80px; height: 80px; opacity: 0.8;
+            transition: transform 0.4s ease; z-index: 2;
+        }
+        .project-card:hover .project-svg { transform: scale(1.1) rotate(5deg); opacity: 1; }
+
+        .project-content {
+            padding: 30px; flex-grow: 1; display: flex; flex-direction: column;
+        }
+        .project-card h3 { font-size: 1.3rem; margin: 0 0 15px 0; color: var(--color-amber-main); }
+        .project-card p { color: #b0b0b0; font-size: 0.95rem; line-height: 1.7; margin-bottom: 25px; flex-grow: 1; }
+
+        .project-tech-stack {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 15px; margin-top: auto;
+            display: flex; gap: 15px; align-items: center;
+        }
+        .project-tech-stack i { font-size: 1.2rem; color: #888; transition: color 0.3s; }
+        .project-card:hover .project-tech-stack i { color: var(--color-teal-accent); }
+
+        /* ------------------------------------------
+        9. CONTACT & FOOTER
+        ------------------------------------------ 
+        */
+        .contact-card {
+            max-width: 500px; margin: 0 auto; padding: 50px 30px; text-align: center;
+        }
+        .contact-link {
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; color: var(--color-text-primary);
+            text-decoration: none; transition: all 0.3s;
+            font-weight: 600; margin: 10px 0; padding: 10px 25px; border-radius: 8px;
+        }
+        .contact-link:hover {
+            background: var(--color-teal-subtle); color: var(--color-teal-accent);
+            transform: translateY(-3px);
+        }
+        .contact-link i { margin-right: 12px; font-size: 1.3rem; color: var(--color-amber-main); }
+
+        footer {
+            text-align: center; padding: 40px 0;
+            border-top: 1px solid var(--glass-border); color: var(--color-gold-muted);
+            font-size: 0.9rem; background: var(--color-charcoal-dark);
+            position: relative; z-index: 2;
+        }
+        
+        @media (max-width: 768px) {
+            #navbar div { display: none; }
+            #navbar { justify-content: center; }
+            section { padding: 80px 5%; }
+            .skills-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 500px) {
+             .skills-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-container">
+        <div class="bg-graphic"></div>
+        <div class="bg-glow"></div>
+    </div>
+
+    <nav id="navbar">
+        <a href="#hero" class="logo">
+            <i class="fas fa-cube"></i> 
+            EKAM WADHWA
+        </a>
+        <div>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section id="hero">
+      <div class="hero-content">
+        <h1 class="reveal-item">Hi, I’m Ekam Wadhwa</h1>
+        <p class="reveal-item subtitle" style="transition-delay: 0.1s;">Student · Developer · Maker · Robotics & AI Enthusiast</p>
+        
+        <div class="avatar-container reveal-item" style="transition-delay: 0.2s;">
+          <div class="avatar-ring"></div>
+          <div class="avatar-wrapper">
+            <img src="avatar.png" alt="Ekam Wadhwa" class="avatar-img">
+          </div>
+        </div>
+      </div>
+      
+      <a href="#about" class="scroll-down">
+          <i class="fas fa-chevron-down"></i>
+      </a>
+    </section>
+
+    <section id="about">
+      <h2 class="reveal-item">About Me</h2>
+      <div class="glass-card about-card reveal-item" style="transition-delay: 0.1s;">
+        <p>I work at the **intersection of technology, automation, and design**. From programming Discord bots and experimenting with AI to interfacing **ESP32 microcontrollers** and building web servers, I love transforming complex ideas into working systems. I am a prolific builder with a passion for **DIY electronics**, robotics, and open-source innovation.</p>
+      </div>
+    </section>
+    
+    <section id="recognition">
+        <h2 class="reveal-item">Recognition & Affiliations</h2>
+        <div class="recognition-grid">
+            <div class="rec-item reveal-item" style="transition-delay: 0.1s;">
+                <i class="fas fa-microchip fa-3x"></i> 
+                <h3>Hack Club Member</h3>
+                <p>Building the future with the global community of student makers.</p>
+            </div>
+            <div class="rec-item reveal-item" style="transition-delay: 0.2s;">
+                <i class="fas fa-robot fa-3x"></i> 
+                <h3>Robotics Innovator</h3>
+                <p>Designing and prototyping complex electro-mechanical systems.</p>
+            </div>
+            <div class="rec-item reveal-item" style="transition-delay: 0.3s;">
+                <i class="fas fa-project-diagram fa-3x"></i> 
+                <h3>Full Stack IoT</h3>
+                <p>Bridging the gap between hardware sensors and web interfaces.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+      <h2 class="reveal-item">Core Skills</h2>
+      <div class="skills-grid">
+        
+        <div class="skill-card reveal-item">
+            <i class="devicon-python-plain"></i>
+            <span>Python</span>
+        </div>
+        <div class="skill-card reveal-item" style="transition-delay: 0.05s;">
+            <i class="devicon-cplusplus-plain"></i>
+            <span>C++ / Arduino</span>
+        </div>
+        
+        <div class="skill-card reveal-item" style="transition-delay: 0.1s;">
+            <i class="fas fa-wifi"></i> <span>ESP32 / IoT</span>
+        </div>
+        <div class="skill-card reveal-item" style="transition-delay: 0.15s;">
+            <i class="fas fa-server"></i> <span>Web Servers</span>
+        </div>
+        
+        <div class="skill-card reveal-item" style="transition-delay: 0.2s;">
+            <i class="devicon-css3-plain"></i>
+            <span>CSS & Design</span>
+        </div>
+        <div class="skill-card reveal-item" style="transition-delay: 0.25s;">
+            <i class="fab fa-discord"></i> <span>Discord Bots</span>
+        </div>
+
+        <div class="skill-card reveal-item" style="transition-delay: 0.3s;">
+            <i class="fas fa-layer-group"></i> 
+            <span>CAD Design</span>
+        </div>
+        <div class="skill-card reveal-item" style="transition-delay: 0.35s;">
+            <i class="fas fa-brain"></i> 
+            <span>AI & ML</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="reveal-item">Selected Projects</h2>
+      <div class="projects-list">
+        
+        <div class="project-card reveal-item">
+          <div class="project-graphic-header" style="background: linear-gradient(45deg, #1a1a1d, #1f2229);">
+            <svg class="project-svg" viewBox="0 0 24 24" fill="none" stroke="#4dd0e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                <line x1="12" y1="20" x2="12.01" y2="20"></line>
+            </svg>
+          </div>
+          <div class="project-content">
+              <h3>ESP32 Web Server</h3>
+              <p>An IoT interface running on an ESP32 microcontroller, hosting a live web server to monitor sensors and control relays remotely.</p>
+              
+              <div class="project-tech-stack">
+                  <i class="fas fa-wifi" title="IoT"></i>
+                  <i class="devicon-cplusplus-plain" title="C++"></i>
+                  <i class="fas fa-server" title="Web Server"></i>
+              </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal-item" style="transition-delay: 0.1s;">
+            <div class="project-graphic-header" style="background: linear-gradient(45deg, #1a1a1d, #252529);">
+            <svg class="project-svg" viewBox="0 0 24 24" fill="none" stroke="#ffb74d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+                <circle cx="12" cy="5" r="2"></circle>
+                <path d="M12 7v4"></path>
+                <line x1="8" y1="16" x2="8" y2="16"></line>
+                <line x1="16" y1="16" x2="16" y2="16"></line>
+            </svg>
+          </div>
+          <div class="project-content">
+              <h3>Custom Discord Bot</h3>
+              <p>A fully functional bot designed to automate server management, moderate chats, and integrate API data for community engagement.</p>
+              
+              <div class="project-tech-stack">
+                  <i class="fab fa-discord" title="Discord API"></i>
+                  <i class="devicon-python-plain" title="Python"></i>
+                  <i class="fas fa-code" title="Automation"></i>
+              </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal-item" style="transition-delay: 0.2s;">
+            <div class="project-graphic-header" style="background: linear-gradient(45deg, #1a1a1d, #2a1f1f);">
+            <svg class="project-svg" viewBox="0 0 24 24" fill="none" stroke="#c29d65" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"></path>
+            </svg>
+          </div>
+          <div class="project-content">
+              <h3>Ionic Thruster</h3>
+              <p>A high-voltage experimental project demonstrating the principles of ion-based propulsion in a controlled environment.</p>
+              
+              <div class="project-tech-stack">
+                  <i class="fas fa-bolt" title="High Voltage"></i>
+                  <i class="fas fa-atom" title="Physics"></i>
+                  <i class="devicon-arduino-plain" title="Microcontrollers"></i>
+              </div>
+          </div>
+        </div>
+        
+        <div class="project-card reveal-item" style="transition-delay: 0.3s;">
+          <div class="project-graphic-header">
+            <svg class="project-svg" viewBox="0 0 24 24" fill="none" stroke="#a0a0a0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
+          </div>
+          <div class="project-content">
+              <h3>DIY Electronics & More</h3>
+              <p>An archive of various DIY experiments including home automation scripts, 3D printed gadgets, and circuit designs.</p>
+              
+              <div class="project-tech-stack">
+                  <i class="fas fa-tools" title="Making"></i>
+                  <i class="fas fa-solder" title="Electronics"></i>
+                  <i class="fas fa-lightbulb" title="Innovation"></i>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="reveal-item">Connect</h2>
+      <div class="contact-card glass-card reveal-item" style="transition-delay: 0.1s;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <a href="mailto:ekamwadhwa2004@gmail.com" class="contact-link">
+                <i class="fas fa-envelope"></i> 
+                ekamwadhwa2004@gmail.com
+            </a>
+            <a href="https://www.instagram.com/ekam.wadhwa1/" target="_blank" class="contact-link">
+                <i class="fab fa-instagram"></i> 
+                @ekam.wadhwa1
+            </a>
+            <span class="contact-link" style="opacity: 0.5; cursor: default;">
+                <i class="fab fa-github"></i> 
+                GitHub (Coming Soon)
+            </span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2025 Ekam Wadhwa · Crafted with precision and creativity</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.15, 
+                rootMargin: '0px 0px -50px 0px' 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-item').forEach(item => {
+                if (!item.style.transitionDelay) {
+                    item.style.transitionDelay = '0s';
+                }
+                observer.observe(item);
+            });
+        });
+    </script>
+
+</body>
+</html>
